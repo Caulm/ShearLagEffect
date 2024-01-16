@@ -8,7 +8,13 @@
              d:DataContext="{d:DesignInstance Type=vm:ShearLagEffectViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
-
+    
+    <UserControl.Resources>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid Background="white">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
@@ -111,9 +117,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Image Grid.Row="0" Source="/Resources/ShearLagEffectImg1.png"/>
             <Image Grid.Row="1" Source="/Resources/ShearLagEffectImg2.png"/>
+            <Image Grid.Row="2" Source="/Resources/ShearLagEffectImg3.png"/>
         </Grid>
 
     </Grid>
