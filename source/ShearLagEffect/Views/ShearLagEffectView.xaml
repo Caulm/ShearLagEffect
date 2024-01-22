@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="AppShearLagEffect.Views.ShearLagEffectView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:AppShearLagEffect.ViewModels"
+             xmlns:local="clr-namespace:AppShearLagEffect.Views"
+             d:DataContext="{d:DesignInstance Type=vm:ShearLagEffectViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1000">
+    
+    <UserControl.Resources>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Background="white">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <!-- 输入区域 -->
+            <Grid Grid.Row="0" Margin="6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="0.6*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2"
+                       Foreground="White" Background="#FF7FBCF9" FontWeight="Bold"
+                       Content="输入条件"/>
+
+                <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
+                       Content="桥梁跨径(mm)"/>
+                <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"
+                         Text="{Binding SpanLength, Mode=TwoWay}"/>
+
+                <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
+                       Content="断面跨号"/>
+                <TextBox Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"
+                         Text="{Binding DbEntity.SpanIndex, Mode=TwoWay}"/>
+
+                <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
+                       Content="断面位置(mm)"/>
+                <TextBox Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"
+                         Text="{Binding DbEntity.Location, Mode=TwoWay}"/>
+
+                <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
+                       Content="上翼缘宽(mm)"/>
+                <TextBox Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center"
+                         Text="{Binding WidthUpper, Mode=TwoWay}"/>
+
+                <Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
+                       Content="下翼缘宽(mm)"/>
+                <TextBox Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center"
+                         Text="{Binding WidthLower, Mode=TwoWay}"/>
+
+                <Label Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2"
+                       Foreground="White" Background="#FF7FBCF9" FontWeight="Bold"
+                       Content="验算结果"/>
+
+                <Label Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"
+                       Content="有效上翼缘宽(mm)"/>
+                <TextBox Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center" IsReadOnly="True"
+                         Text="{Binding EffectiveWidthUpper, Mode=OneWay}"/>
+
+                <Label Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"
+                       Content="有效下翼缘宽(mm)"/>
+                <TextBox Grid.Row="8" Grid.Column="1" VerticalContentAlignment="Center" IsReadOnly="True"
+                         Text="{Binding EffectiveWidthLower, Mode=OneWay}"/>
+
+                <Label Grid.Row="9" Grid.Column="0" Padding="5,7,5,5"
+                       Content="验算报告"/>
+                <TextBox Grid.Row="9" Grid.Column="1" Padding="1,6,1,6" VerticalContentAlignment="Top"
+                         IsReadOnly="True" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"
+                         Text="{Binding DbEntity.AnalyzeReport, Mode=OneWay}"/>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Margin="6" Content="全部清空" Command="{Binding ClearAllCommand}"/>
+                <Button Grid.Column="2" Margin="6" Content="开始计算" Command="{Binding CalculateCommand}"/>
+            </Grid>
+        </Grid>
+
+        <!-- 分割线 -->
+        <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
+
+        <!-- 图示区域 -->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Source="/Resources/ShearLagEffectImg1.png"/>
+            <Image Grid.Row="1" Source="/Resources/ShearLagEffectImg2.png"/>
+            <Image Grid.Row="2" Source="/Resources/ShearLagEffectImg3.png"/>
+        </Grid>
+
+    </Grid>
+</UserControl>

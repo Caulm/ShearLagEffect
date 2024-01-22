@@ -1,0 +1,186 @@
+﻿<UserControl x:Class="AppShearLagEffect.Views.LocalStabilityView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:AppShearLagEffect.ViewModels"
+             xmlns:local="clr-namespace:AppShearLagEffect.Views"
+             d:DataContext="{d:DesignInstance Type=vm:LocalStabilityViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="white">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <!-- 输入区域 -->
+            <Grid Grid.Row="0" Margin="6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="0.6*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center"
+                       Foreground="White" Background="#FF7FBCF9" FontWeight="Bold"
+                       Content="输入条件"/>
+
+                <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
+                       Content="横向加劲间距(mm)"/>
+                <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"
+                         Text="{Binding DbEntity.TransverseStiffenerSpacing, Mode=TwoWay}"/>
+
+                <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
+                       Content="受压板宽度(mm)"/>
+                <TextBox Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"
+                         Text="{Binding DbEntity.Width, Mode=TwoWay}"/>
+
+                <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
+                       Content="受压板厚度(mm)"/>
+                <TextBox Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"
+                         Text="{Binding DbEntity.Thickness, Mode=TwoWay}"/>
+
+                <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
+                       Content="纵向加劲数量"/>
+                <TextBox Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center"
+                         Text="{Binding DbEntity.LongitudinalStiffenerCount, Mode=TwoWay}"/>
+
+                <Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
+                       Content="纵向加劲类型"/>
+                <ComboBox Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center"
+                          ItemsSource="{Binding StiffenerTypeValues}"
+                          SelectedValue="{Binding DbEntity.LongitudinalStiffenerType, Mode=TwoWay}"
+                          SelectedValuePath="Value"
+                          DisplayMemberPath="Name">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="SelectionChanged">
+                            <b:InvokeCommandAction Command="{Binding StiffenerTypeSelectionChangedCommand}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </ComboBox>
+
+                <StackPanel Grid.Row="6" Grid.ColumnSpan="2">
+                    <Grid Panel.ZIndex="0" Visibility="{Binding PanelVisibility0}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.4*"/>
+                            <ColumnDefinition Width="0.6*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
+                               Content="肋高(mm)"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center"
+                                 Text="{Binding DbEntity.IShapeHeight, Mode=TwoWay}"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
+                               Content="肋厚(mm)"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"
+                                 Text="{Binding DbEntity.IShapeThickness, Mode=TwoWay}"/>
+                    </Grid>
+                    <Grid Panel.ZIndex="1" Visibility="{Binding PanelVisibility1}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.4*"/>
+                            <ColumnDefinition Width="0.6*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
+                               Content="肋高(mm)"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center"
+                                 Text="{Binding DbEntity.UShapeHeight, Mode=TwoWay}"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
+                               Content="开口宽度(mm)"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"
+                                 Text="{Binding DbEntity.UShapeOpeningWidth, Mode=TwoWay}"/>
+                        
+                        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
+                               Content="底板宽度(mm)"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"
+                                 Text="{Binding DbEntity.UShapeBottomWidth, Mode=TwoWay}"/>
+
+                        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
+                               Content="肋厚(mm)"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"
+                                 Text="{Binding DbEntity.UShapeThickness, Mode=TwoWay}"/>
+                    </Grid>
+                </StackPanel>
+
+                <Label Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center"
+                       Foreground="White" Background="#FF7FBCF9" FontWeight="Bold"
+                       Content="验算结果"/>
+
+                <Label Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"
+                       Content="纵向加劲刚性判断"/>
+                <TextBox Grid.Row="8" Grid.Column="1" VerticalContentAlignment="Center" IsReadOnly="True"
+                         Text="{Binding DbEntity.RigidityState, Mode=OneWay}"/>
+
+                <Label Grid.Row="9" Grid.Column="0" Padding="5,7,5,5"
+                       Content="验算报告"/>
+                <TextBox Grid.Row="9" Grid.Column="1" Padding="1,6,1,6" VerticalContentAlignment="Top"
+                         IsReadOnly="True" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"
+                         Text="{Binding DbEntity.AnalyzeReport, Mode=OneWay}"/>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Margin="6" Content="全部清空" Command="{Binding ClearAllCommand}"/>
+                <Button Grid.Column="2" Margin="6" Content="开始计算" Command="{Binding CalculateCommand}"/>
+            </Grid>
+        </Grid>
+
+        <!-- 分割线 -->
+        <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
+
+        <!-- 图示区域 -->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Visibility="{Binding PanelVisibility0}" Source="/Resources/LocalStabilityImg1.png"/>
+            <Image Grid.Row="1" Visibility="{Binding PanelVisibility0}" Source="/Resources/LocalStabilityImg2.png"/>
+            <Image Grid.Row="0" Visibility="{Binding PanelVisibility1}" Source="/Resources/LocalStabilityImg3.png"/>
+            <Image Grid.Row="1" Visibility="{Binding PanelVisibility1}" Source="/Resources/LocalStabilityImg4.png"/>
+        </Grid>
+
+    </Grid>
+</UserControl>
